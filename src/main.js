@@ -1,9 +1,19 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
+// import vue router
+import router from './router';
+
+// import store vuex
+import store from './store';
+
 // createApp(App).mount('#app')
 
 const app = createApp(App)
+
+app.use(router)
+
+app.use(store)
 
 // define mixins for global function
 app.mixin({
