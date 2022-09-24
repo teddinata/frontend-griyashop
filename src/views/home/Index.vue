@@ -1,11 +1,29 @@
 <template>
-    <div class="home">
-        HALAMAN HOME
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <Category />
+            </div>
+            <div class="col-md-9 mb-4">
+                <Slider />
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid mb-5 mt-4">
+        <!-- data product -->
     </div>
 </template>
 
 <script>
+import Category from '@/components/Category.vue'
+import Slider from '@/components/Slider.vue'
 export default {
     name: 'HomeComponent',
+
+    components: {
+        Category,
+        Slider
+    }
 }
 </script>
