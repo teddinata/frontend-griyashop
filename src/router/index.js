@@ -47,6 +47,21 @@ const routes = [
         path: '/',
         name: 'home',
         component: () => import( /* webpackChunkName: "login" */ '@/views/home/Index.vue'),
+    },
+    {
+        path: '/product/:slug',
+        name: 'detail_product',
+        component: () => import( /* webpackChunkName: "login" */ '@/views/product/Show.vue'),
+    },
+    {
+        path: '/categories',
+        name: 'categories',
+        component: () => import( /* webpackChunkName: "login" */ '@/views/category/Index.vue'),
+    },
+    {
+        path: '/category/:slug',
+        name: 'detail_category',
+        component: () => import( /* webpackChunkName: "login" */ '@/views/category/Show.vue'),
     }
 ]
 
