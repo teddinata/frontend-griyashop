@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid mt-4 mb-5">
+    <div class="container-fluid mb-5 mt-4">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card border-0 shadow rounded">
@@ -8,39 +8,41 @@
                         <hr>
                         <form @submit.prevent="register">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Full Name</label>
-                                        <input type="text" class="form-control"
-                                            placeholder="Full Name"
-                                            v-model="user.name"
-                                        >
+                                        <!-- label with align left -->
+                                        <div class="text-left">
+                                            <strong>Nama</strong>
+                                        </div>
+                                        <input type="text" v-model="user.name" class="form-control" placeholder="Full Name">
                                     </div>
                                     <div v-if="validation.name" class="mt-2 alert alert-danger">
                                         {{ validation.name[0] }}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Email</label>
-                                        <input type="email" class="form-control"
-                                            placeholder="Email"
-                                            v-model="user.email"
-                                        >
+                                        <!-- label with align left -->
+                                        <div class="text-left">
+                                            <strong>Email</strong>
+                                        </div>
+                                        <input type="email" v-model="user.email" class="form-control"
+                                            placeholder="Email Address" />
                                     </div>
                                     <div v-if="validation.email" class="mt-2 alert alert-danger">
                                         {{ validation.email[0] }}
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Passoword</label>
-                                        <input type="password" class="form-control"
-                                            placeholder="Password"
-                                            v-model="user.password"
-                                        >
+                                        <div class="text-left">
+                                            <strong>Password</strong>
+                                        </div>
+                                        <input type="password" v-model="user.password" class="form-control"
+                                            placeholder="Password">
                                     </div>
                                     <div v-if="validation.password" class="mt-2 alert alert-danger">
                                         {{ validation.password[0] }}
@@ -48,23 +50,21 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Confirm Password</label>
-                                        <input type="password" class="form-control"
-                                            placeholder="Confirm Password"
-                                            v-model="user.password_confirmation"
-                                        >
+                                        <div class="text-left">
+                                            <strong>Konfirmasi Password</strong>
+                                        </div>
+                                        <input type="password" v-model="user.password_confirmation" class="form-control"
+                                            placeholder="Konfirmasi Password">
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">
-                                Register
-                            </button>
+                            <button type="submit" class="btn btn-primary btn-block">REGISTER</button>
                         </form>
                     </div>
                 </div>
                 <div class="register mt-3 text-center">
                     <p>
-                        Sudah punya akun ? <router-link :to="{name: 'login'}">Login Disini !</router-link>
+                        Suda punya akun ? <router-link :to="{name: 'login'}">Login Disini !</router-link>
                     </p>
                 </div>
             </div>
@@ -73,62 +73,66 @@
 </template>
 
 <script>
-import {ref, reactive} from 'vue'
-import {useRouter} from 'vue-router'
-import {useStore} from 'vuex'
+    import { ref, reactive } from 'vue'
+    import { useStore } from 'vuex'
+    import { useRouter } from 'vue-router'
 
-export default {
-    name: 'RegisterComponent',
+    export default {
 
-    setup() {
+        name: 'RegisterComponent',
 
-        // user state
-        const user = reactive({
-            name: '',
-            email: '',
-            password: '',
-            password_confirmation: ''
-        })
+        setup() {
 
-        // validation state
-        const validation = ([])
+            //user state
+            const user = reactive({
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: ''
+            })
 
-        // router
-        const router = useRouter()
+            //validation state
+            const validation = ref([])
 
-        // store
-        const store = useStore()
+            //store vuex
+            const store = useStore()
 
-        // function register, run if form submit
-        function register(){
+            //route
+            const router = useRouter()
 
-            // define variable
-            let name = user.name
-            let email = user.email
-            let password = user.password
-            let password_confirmation = user.password_confirmation
+            //function register, fungsi ini di jalankan ketika form di submit
+            function register() {
 
-            // call action "register" from store vuex
-            store.dispatch('auth/register', {
-                name,
-                email,
-                password,
-                password_confirmation
-            }).then(() => {
-                // if success, redirect to home
-                router.push({name: 'dashboard'})
-            }).catch((error) => {
-                // if error, set validation state
-               validation.value = error
-            });
+                //define variable 
+                let name     = user.name
+                let email    = user.email
+                let password = user.password
+                let password_confirmation = user.password_confirmation
+
+               //panggil action "register" di dalam module "auth" vuex
+                store.dispatch('auth/register', {
+                    name,
+                    email,
+                    password,
+                    password_confirmation
+                })
+                .then(() => {
+                    //redirect ke dashboard
+                    router.push({name: 'dashboard'})
+                }).catch(error => {
+                    //show validaation message
+                    validation.value = error
+                })
+            }
+
+            //return a state and function
+            return {
+                user,
+                validation,
+                register
+            }
+
         }
 
-        // return a state and function
-        return {
-            user,
-            validation,
-            register
-        }
     }
-}
 </script>
