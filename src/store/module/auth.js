@@ -111,6 +111,12 @@ const auth = {
                 localStorage.removeItem('token')
                 localStorage.removeItem('user')
 
+                /**
+                 * commit ke module cart, untuk set mutation dan state cart menjadi kosong
+                 */
+                commit('cart/GET_CART', 0, { root: true })
+                commit('cart/TOTAL_CART', 0, { root: true })
+
                 // delete header axios
                 delete Api.defaults.headers.common['Authorization']
 
@@ -150,6 +156,18 @@ const auth = {
 
                         //commit get user ke mutation
                         commit('GET_USER', user)
+
+                        // get data cart 
+                        Api.get('/cart')
+                        .then(response => {
+                            commit('cart/GET_CART', response.data.cart, { root: true })
+                        })
+
+                        // get total cart 
+                        Api.get('/cart/total')
+                        .then(response => {
+                            commit('cart/GET_TOTAL', response.data.total, { root: true })
+                        })
     
                         // resolve promise
                         resolve(response)

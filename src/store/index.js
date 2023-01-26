@@ -7,6 +7,7 @@ import order from './module/order'
 import category from './module/category'
 import slider from './module/slider'
 import product from './module/product'
+import cart from './module/cart'
 
 //create store vuex
 export default createStore({
@@ -16,7 +17,8 @@ export default createStore({
         order,
         category,
         slider,
-        product
+        product,
+        cart
     }
 
 })
