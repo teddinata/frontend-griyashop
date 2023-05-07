@@ -14,8 +14,8 @@
                           <label class="font-weight-bold" style="font-size: 20px;"> {{ product.title }} </label>
                           <hr>
                           <div class="price-product" id="price-product" style="font-size: 1.35rem"><span
-                                  class="font-weight-bold mr-4" style="color: green">Rp. {{ moneyFormat(calculateDiscount(product)) }}</span> 
-                              <s class="font-weight-bold" style="text-decoration-color:red">Rp. {{ moneyFormat(product.price) }}</s>
+                                  class="font-weight-bold mr-4" style="color: green">Rp. {{ calculateDiscount(product) }}</span> 
+                              <s class="font-weight-bold" style="text-decoration-color:red">Rp. {{ product.price }}</s>
                           </div>
                           <table class="table table-borderless mt-3">
                               <tbody>
@@ -59,14 +59,12 @@
   </template>
   
   <script>
-      import { computed, onMounted } from 'vue'   // computed dan onMounted
-      import { useStore } from 'vuex' // store Vuex
-      import { useRoute, useRouter } from 'vue-router' // vue router
+  import { computed, onMounted } from 'vue'   // computed dan onMounted
+  import { useStore } from 'vuex' // store Vuex
+  import { useRoute, useRouter } from 'vue-router' // vue router
   
       export default {
-  
-          name: 'ProductShowComponent',
-  
+        name: 'ProductShowComponent',
           setup() {
   
               //vue route
@@ -74,8 +72,8 @@
   
               //vue router
               const router = useRouter()
-              
-              //store vuex
+  
+               //store vuex
               const store = useStore()
   
               //onMounted akan menjalankan action "getDetailProduct" di module "product" Vuex
@@ -83,28 +81,32 @@
                   store.dispatch('product/getDetailProduct', route.params.slug)
               })
   
-              //computed properti digunakan untuk mendapatkan data detail product dari state "product" di module "product" Vuex 
+              //computed properti digunakan untuk mendapatkan data detail product dari state "product" di module "product" Vuex
               const product = computed(() => {
                   return store.state.product.product
               })
-
-            // function add to cart 
-            function addToCart(product_id, price, weight){
-
-                // check token dulu
-                const token = store.state.auth.token
-                if(!token){
-                    return router.push({name: 'login'})
-                }
-
-                // panggil function addtocart di module Cart
-                store.dispatch('cart/addToCart', {
-                    product_id: product_id,
-                    price: price,
-                    weight: weight,
-                    quantity: 1
-                })
-            }
+  
+              /**
+               * function addToCart
+               */
+              function addToCart(product_id, price, weight) {
+                  
+                  //check token terlebih dahulu
+                  const token = store.state.auth.token
+  
+                  if(!token) {
+                      return router.push({name: 'login'})
+                  }
+  
+                  //panggil action addToCart di module cart
+                  store.dispatch('cart/addToCart', {
+                      product_id: product_id,
+                      price: price,
+                      weight: weight,
+                      quantity: 1
+                  }) 
+  
+              }
   
               return {
                   route,

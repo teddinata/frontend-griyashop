@@ -49,9 +49,8 @@
         
     export default {
         name: 'OrderIndexComponent',
-
         components: {
-            CustomerMenu: CustomerMenu
+            CustomerMenu
         },
 
         setup() {

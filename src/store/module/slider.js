@@ -1,3 +1,4 @@
+//import global API
 import Api from '../../api/Api'
 
 const slider = {
@@ -7,29 +8,40 @@ const slider = {
 
     //state
     state: {
-        // index slider 
-        sliders: [],
+
+        //index slider
+        sliders: []
+    
     },
 
     //mutations
     mutations: {
 
-        //set data slider
+        //set state sliders dengan data dari response 
         GET_SLIDERS(state, sliders) {
             state.sliders = sliders
-        }
+        } 
 
     },
 
     //actions
     actions: {
 
-        //get data slider
+        //action getSliders
         getSliders({ commit }) {
-            Api.get('/sliders').then(response => {
+
+            //get data sliders ke server
+            Api.get('/sliders')
+            .then(response => {
+
+                //commit ke mutation GET_SLIDERS dengan response data
                 commit('GET_SLIDERS', response.data.sliders)
+
             }).catch(error => {
+
+                //show error log dari response
                 console.log(error)
+
             })
         }
 
@@ -38,10 +50,6 @@ const slider = {
     //getters
     getters: {
 
-        //get data slider
-        getSliders(state) {
-            return state.sliders
-        }
     }
 
 }

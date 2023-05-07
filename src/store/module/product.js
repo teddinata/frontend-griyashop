@@ -1,3 +1,4 @@
+//import global API
 import Api from '../../api/Api'
 
 const product = {
@@ -7,59 +8,74 @@ const product = {
 
     //state
     state: {
-        
-        //  index data product 
+    
+        //index products
         products: [],
 
-        // detail product
-        product: {},
+        //detail product
+        product: {}
+
     },
 
     //mutations
     mutations: {
 
-        //set data product
+        //set state products dengan data dari response 
         GET_PRODUCTS(state, products) {
             state.products = products
         },
 
-        //set data product
+        //set state product dengan data dari response
         DETAIL_PRODUCT(state, product) {
             state.product = product
         }
-
 
     },
 
     //actions
     actions: {
 
-        //get data product
+        //action getProducts
         getProducts({ commit }) {
-            Api.get('/products').then(response => {
+
+            //get data sliders ke server
+            Api.get('/products')
+            .then(response => {
+
+                //commit ke mutation GET_PRODUCTS dengan response data
                 commit('GET_PRODUCTS', response.data.products)
+
             }).catch(error => {
+
+                //show error log dari response
                 console.log(error)
+
             })
         },
 
-        //get data product detail
+        //action getDetailProducts
         getDetailProduct({ commit }, slug) {
-            Api.get(`/product/${slug}`).then(response => {
+
+            //get data sliders ke server
+            Api.get(`/product/${slug}`)
+            .then(response => {
+
+                //commit ke mutation GET_PRODUCTS dengan response data
                 commit('DETAIL_PRODUCT', response.data.product)
+
             }).catch(error => {
+
+                //show error log dari response
                 console.log(error)
+
             })
         }
+
     },
 
     //getters
     getters: {
 
-        //get data product
-        getProducts(state) {
-            return state.products
-        }
     }
 
 }
