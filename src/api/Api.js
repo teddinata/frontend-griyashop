@@ -6,7 +6,8 @@ const Api = axios.create({
     
     // baseURL: 'http://backend-griyashop.dev.com/api',
     // baseURL: 'http://127.0.0.1:8000/api',
-    baseURL: 'https://backend-onlinestore.creazylab.id/api',
+    // baseURL: 'https://backend-onlinestore.creazylab.id/api',
+    baseURL: 'https://bhinneka-gadget-api.creazylab.works/api',
 
     headers: {
         'Content-Type': 'application/json',
